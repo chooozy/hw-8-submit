@@ -4,7 +4,7 @@ int main(int argc, char *argv[]) {
     string filename = get_arg(argc, argv, "src/small.txt");
     Graph G;
     file_to_graph(filename, G);
-
+    
     cout << "MST: ";
     EdgeList mst = Kruskals(G);
     cout << mst << endl;

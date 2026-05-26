@@ -29,17 +29,18 @@ VertexList Graph::edges_from(Vertex vertex) const {
     VertexList neighbors;
     for (const Edge& e : *this) {
         if (e.u == vertex) neighbors.push_back(e.v);
+        else if (e.v == vertex) neighbors.push_back(e.u);
     }
-    return neighbors;
+    VertexList unique;
+    for (Vertex v : neighbors) {
+        if (find(unique.begin(), unique.end(), v) == unique.end())
+            unique.push_back(v);
+    }
+    return unique;
 }
 
 VertexList Graph::edges_from_reverse(Vertex vertex) const {
-    VertexList neighbors;
-    for (int i = size() - 1; i >= 0; i--) {
-        const Edge& e = (*this)[i];
-        if (e.u == vertex) neighbors.push_back(e.v);
-    }
-    return neighbors;
+    return edges_from(vertex);
 }
 
 int sum_weights(const EdgeList& L) {
@@ -75,18 +76,18 @@ VertexList dfs(const Graph& graph, Vertex startVertex) {
     vector<bool> visited(graph.numVertices, false);
     stack<Vertex> S;
 
+    visited[startVertex] = true;
     S.push(startVertex);
 
     while (!S.empty()) {
         Vertex v = S.top(); S.pop();
-        if (visited[v]) continue;
-        visited[v] = true;
         result.push_back(v);
 
-        VertexList neighbors = graph.edges_from_reverse(v);
-        for (int i = neighbors.size() - 1; i >= 0; i--) {
-            if (!visited[neighbors[i]])
-                S.push(neighbors[i]);
+        for (Vertex w : graph.edges_from(v)) {
+            if (!visited[w]) {
+                visited[w] = true;
+                S.push(w);
+            }
         }
     }
     return result;
