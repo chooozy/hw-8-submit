@@ -29,14 +29,8 @@ VertexList Graph::edges_from(Vertex vertex) const {
     VertexList neighbors;
     for (const Edge& e : *this) {
         if (e.u == vertex) neighbors.push_back(e.v);
-        else if (e.v == vertex) neighbors.push_back(e.u);
     }
-    VertexList unique;
-    for (Vertex v : neighbors) {
-        if (find(unique.begin(), unique.end(), v) == unique.end())
-            unique.push_back(v);
-    }
-    return unique;
+    return neighbors;
 }
 
 VertexList Graph::edges_from_reverse(Vertex vertex) const {
@@ -44,14 +38,8 @@ VertexList Graph::edges_from_reverse(Vertex vertex) const {
     for (int i = size() - 1; i >= 0; i--) {
         const Edge& e = (*this)[i];
         if (e.u == vertex) neighbors.push_back(e.v);
-        else if (e.v == vertex) neighbors.push_back(e.u);
     }
-    VertexList unique;
-    for (Vertex v : neighbors) {
-        if (find(unique.begin(), unique.end(), v) == unique.end())
-            unique.push_back(v);
-    }
-    return unique;
+    return neighbors;
 }
 
 int sum_weights(const EdgeList& L) {
