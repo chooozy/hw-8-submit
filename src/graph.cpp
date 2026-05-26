@@ -29,15 +29,10 @@ VertexList Graph::edges_from(Vertex vertex) const {
     VertexList neighbors;
     for (const Edge& e : *this) {
         if (e.u == vertex) neighbors.push_back(e.v);
-        else if (e.v == vertex) neighbors.push_back(e.u);
     }
-    VertexList unique;
-    for (Vertex v : neighbors) {
-        if (find(unique.begin(), unique.end(), v) == unique.end())
-            unique.push_back(v);
-    }
-    return unique;
+    return neighbors;
 }
+
 
 VertexList Graph::edges_from_reverse(Vertex vertex) const {
     return edges_from(vertex);
