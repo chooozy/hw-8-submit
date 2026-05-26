@@ -1,7 +1,7 @@
 #include "graph.h"
 
 void error(string msg) {
-    throw runtime_error("Error: " + msg);
+    cerr << "Error: " << msg << endl;
 }
 
 string get_arg(int argc, char *argv[], string def) {
